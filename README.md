@@ -1,1 +1,1 @@
-### Harnesses for LLM Copilots
+### Harnesses for LLMs
