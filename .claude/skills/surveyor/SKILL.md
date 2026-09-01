@@ -27,6 +27,7 @@ Unlike `specifier` (which goes deep on one slice) or `archivist`'s own Step 0 (d
 - Enough of the codebase's shape to judge which `.claude/docs/*` categories from `archivist`'s own artifact table genuinely apply here (vision/overview, functional/module reference, topology/structure, static infrastructure) — skip a category outright if the project doesn't have that kind of content, rather than creating a thin placeholder file for it.
 - Natural bounded contexts visible in the repo's structure — note them as slice candidates for Step 4's report, don't investigate any one of them deeply; that depth is `specifier`'s job, later, on demand.
 - Cross-cutting conventions the codebase already follows consistently that aren't caught by a linter/type-checker/CI check — rule candidates, per `archivist`'s "Spotting a rule candidate" check (cross-cutting, not tool-enforced, applies every time, would be silently violated otherwise). Note them; don't write them yet, and don't mistake incidental consistency (only happens to look the same so far) for a deliberate convention.
+- Evidence relevant to `references/baseline-checklist.md` (auth middleware, input validation, caching, queues, rate limiting, pagination) — enough that Step 2's questions on this can be confirmations of what was found, not blind asks.
 
 For a greenfield repo with nothing to scan, this step is short by necessity — confirm that with the user rather than inventing structure that doesn't exist yet, and lean more on Step 2's interview.
 
@@ -39,6 +40,7 @@ Same discipline as `specifier`: confirm from Step 1 where possible, ask where it
 - **Infrastructure** — whether the project has static infrastructure/provisioning worth a `.claude/docs/infrastructure.md`, if Step 1 couldn't tell from config alone.
 - For greenfield repos specifically: intended stack and repo layout, since there's no code yet to read it from.
 - **Rule candidates** — for each pattern Step 1 flagged, confirm with the user it's a deliberate convention worth enforcing on every future touch of matching files, not just how the code happens to look so far. Drop anything unconfirmed rather than creating it as a guess.
+- **Security, performance, and scalability baseline** — walk `references/baseline-checklist.md` in this same batch. Every project has to satisfy these three in some form, even when the honest answer is "not applicable here" — the checklist is a fixed set of questions, not prewritten answers; route each confirmed one per its own routing rules (a `structure.md` note, a rule candidate, or a consideration flagged for a future slice's `spec.md`) rather than writing it down verbatim.
 
 ## Step 3 — Hand off to archivist
 
@@ -56,6 +58,7 @@ Close by naming, explicitly:
 
 - What got created, including which rules were written and why each earned one.
 - The slice candidates noted in Step 1, as a short list — not specced, just surfaced, so the user knows what exists to spec later via `specifier` when they're ready to work on one.
+- Any security/performance/scalability consideration from the baseline checklist that was confirmed but scoped to a specific slice rather than the whole project — flagged here, not written anywhere yet, for `specifier` to fold into that slice's `spec.md` Invariants once it gets specced.
 
 ---
 
