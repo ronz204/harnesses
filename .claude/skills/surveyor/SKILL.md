@@ -25,7 +25,8 @@ Unlike `specifier` (which goes deep on one slice) or `archivist`'s own Step 0 (d
 - The top-level directory tree, for what each major part is for.
 - Any existing README or doc, for stated purpose/vision — cross-check it against the actual code rather than trusting it as-is.
 - Enough of the codebase's shape to judge which `.claude/docs/*` categories from `archivist`'s own artifact table genuinely apply here (vision/overview, functional/module reference, topology/structure, static infrastructure) — skip a category outright if the project doesn't have that kind of content, rather than creating a thin placeholder file for it.
-- Natural bounded contexts visible in the repo's structure — note them as slice candidates for Step 3's report, don't investigate any one of them deeply; that depth is `specifier`'s job, later, on demand.
+- Natural bounded contexts visible in the repo's structure — note them as slice candidates for Step 4's report, don't investigate any one of them deeply; that depth is `specifier`'s job, later, on demand.
+- Cross-cutting conventions the codebase already follows consistently that aren't caught by a linter/type-checker/CI check — rule candidates, per `archivist`'s "Spotting a rule candidate" check (cross-cutting, not tool-enforced, applies every time, would be silently violated otherwise). Note them; don't write them yet, and don't mistake incidental consistency (only happens to look the same so far) for a deliberate convention.
 
 For a greenfield repo with nothing to scan, this step is short by necessity — confirm that with the user rather than inventing structure that doesn't exist yet, and lean more on Step 2's interview.
 
@@ -37,6 +38,7 @@ Same discipline as `specifier`: confirm from Step 1 where possible, ask where it
 - **Scope boundaries** — anything explicitly out of scope for the project as a whole, if that's already decided.
 - **Infrastructure** — whether the project has static infrastructure/provisioning worth a `.claude/docs/infrastructure.md`, if Step 1 couldn't tell from config alone.
 - For greenfield repos specifically: intended stack and repo layout, since there's no code yet to read it from.
+- **Rule candidates** — for each pattern Step 1 flagged, confirm with the user it's a deliberate convention worth enforcing on every future touch of matching files, not just how the code happens to look so far. Drop anything unconfirmed rather than creating it as a guess.
 
 ## Step 3 — Hand off to archivist
 
@@ -44,14 +46,15 @@ Package the investigation and interview results and invoke `archivist` to write,
 
 - `CLAUDE.md` via `references/mark.template.md` — project description, knowledge base layout, repo layout, setup/common commands, permissions summary, conventions.
 - Each warranted `.claude/docs/*.md` via `references/docs.template.md` — only the categories Step 1 actually found material for.
+- Each rule candidate confirmed in Step 2, as its own `.claude/rules/<topic>.md` via `references/rules.template.md` — one file per concern, same as any other rule.
 
-This skill never writes either file itself, same separation `specifier` keeps from `archivist` — it produces grounded material, `archivist` still does the write and still applies its own Step 0 discipline against what was found.
+This skill never writes any of these itself, same separation `specifier` keeps from `archivist` — it produces grounded material, `archivist` still does the write and still applies its own Step 0 discipline against what was found.
 
 ## Step 4 — Report what's next
 
 Close by naming, explicitly:
 
-- What got created.
+- What got created, including which rules were written and why each earned one.
 - The slice candidates noted in Step 1, as a short list — not specced, just surfaced, so the user knows what exists to spec later via `specifier` when they're ready to work on one.
 
 ---
@@ -59,6 +62,7 @@ Close by naming, explicitly:
 ## Non-goals
 
 - Never creates a `projects/*/deltas/*` slice file — bootstrapping a project's context and specifying one of its slices are different jobs; a slice gets specced later, one at a time, via `specifier`.
+- Never creates a `.claude/rules/*.md` without the user confirming the pattern is deliberate and worth enforcing every time — unlike `CLAUDE.md`/docs content, a false-positive rule actively injects wrong guidance into every future session that touches a matching file, not just a passive gap.
 - Never overwrites an existing `CLAUDE.md`/`.claude/docs/*` that already has real content without the user confirming a deliberate refresh — see Step 0.
 - Doesn't write `CLAUDE.md` or any doc file itself — always hands off to `archivist`.
 - Doesn't attempt exhaustive documentation of every module or subsystem in this one pass — a lean, accurate first cut is the goal; depth accrues afterward through normal `archivist` and `specifier` use as the project is actually worked on.

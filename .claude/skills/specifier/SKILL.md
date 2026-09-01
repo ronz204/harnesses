@@ -30,6 +30,8 @@ While reading, actively check the implementation against:
 
 Note every mismatch found — a doc that says one thing while the code does another is exactly the kind of gap a robust spec exists to close, not something to quietly resolve in either direction.
 
+Also watch for a pattern that clearly extends beyond this one slice — not "how this capability behaves" but "how code gets written in this project" (a naming convention, a required check, a structural pattern repeated regardless of slice). That's a rule candidate, not spec content — see `archivist`'s "Spotting a rule candidate" check (cross-cutting, not already tool-enforced, applies every time, would be silently violated otherwise). Don't fold it into this slice's `Invariants`; carry it into Step 3 instead.
+
 ## Step 2 — Ask what code (or a mockup) alone can't answer
 
 For each of the following, either confirm it directly from what Step 1 found, or ask the user — don't guess. Which list applies depends on whether the output is `spec.md`, `design.md`, or both — ask the user up front if it's not obvious from the request.
@@ -57,9 +59,11 @@ Ask in a short, focused batch (`AskUserQuestion` when the choices are concrete a
 
 Any mismatch found in Step 1, or any place where the user's answer contradicts an existing doc/rule/the slice's own current spec or design, gets surfaced and resolved with the user before it goes anywhere — never silently pick the code's version or the doc's version. This includes a spec/design mismatch — e.g. an interaction described in `design.md` implying a rule `spec.md` doesn't actually state — surface it rather than letting the design silently invent logic-layer behavior. Once resolved, note which side won and why; that resolution is what gets folded into the updated file(s) — this system doesn't keep a separate decision log for it.
 
+Any rule candidate flagged in Step 1 gets confirmed here too — ask the user whether the pattern is deliberate and worth enforcing on every future touch of matching files, not just incidental consistency in the code read so far. Only a confirmed candidate goes into Step 4's handoff; drop an unconfirmed one rather than passing it along as a maybe.
+
 ## Step 4 — Hand off to archivist
 
-Once the relevant fields (spec: intent, scope, contract, invariants, deferred questions, acceptance criteria, optional context — or design: scope, layout, states, interactions, consumes, deferred questions, acceptance criteria, optional context) are each either confirmed from code/mockup or answered by the user, package the result and invoke `archivist` to write it: a new or updated `<slice>.spec.md` via `references/spec.template.md`, and a new or updated `<slice>.design.md` via `references/design.template.md` if the slice has a UI-facing surface in scope. This skill's job ends at producing that material — it never writes into `deltas/` itself, even when the answer seems obvious enough to just write down directly.
+Once the relevant fields (spec: intent, scope, contract, invariants, deferred questions, acceptance criteria, optional context — or design: scope, layout, states, interactions, consumes, deferred questions, acceptance criteria, optional context) are each either confirmed from code/mockup or answered by the user, package the result and invoke `archivist` to write it: a new or updated `<slice>.spec.md` via `references/spec.template.md`, a new or updated `<slice>.design.md` via `references/design.template.md` if the slice has a UI-facing surface in scope, and any rule candidate confirmed in Step 3 for `archivist` to write separately as its own `.claude/rules/<topic>.md` — a cross-cutting convention doesn't belong inside a slice's own files. This skill's job ends at producing that material — it never writes into `deltas/` or `.claude/rules/` itself, even when the answer seems obvious enough to just write down directly.
 
 If the resulting spec/design implies nontrivial implementation work, say so and suggest `archivist` also draft a `<slice>.plan.md` to sequence it — that's a separate deliverable with its own template (`references/plans.template.md`), not something this skill's interview needs to produce itself.
 
