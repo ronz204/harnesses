@@ -1,5 +1,5 @@
 <!--
-Template for projects/<project>/deltas/<slice>.design.md — the living,
+Template for services/<service>/deltas/<slice>.design.md — the living,
 current UI-facing contract for a slice: the presentation-layer counterpart
 to <slice>.spec.md's logic-layer contract. Created only for slices that have
 a UI-facing surface — most slices never need this file.
@@ -8,9 +8,9 @@ always current truth, not a log of how it got there. Never restate an
 invariant or business rule that already lives in spec.md — reference the
 part of its contract that's relevant to rendering this surface instead of
 duplicating it, or the two files will drift against each other.
-In a repo split across multiple projects, this file lives under whichever
-project actually renders the UI — which may not be the same project
-<slice>.spec.md lives under. If so, name that other project explicitly
+In a repo split across multiple services, this file lives under whichever
+service actually renders the UI — which may not be the same service
+<slice>.spec.md lives under. If so, name that other service explicitly
 wherever this file points at the logic contract, since a reader won't have
 both files in the same directory.
 Fill every section; delete guidance comments before presenting the draft.

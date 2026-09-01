@@ -1,6 +1,6 @@
 # Delta Harness
 
-Source repository for the delta methodology: a portable Claude Code knowledge-base system built around four skills (`surveyor`, `specifier`, `archivist`, `sentinel`) that keep a project's specs, docs, and rules grounded in its real implementation instead of drifting from it. This repo holds the methodology's source; it is not itself a product with a `projects/*/deltas/` of its own.
+Source repository for the delta methodology: a portable Claude Code knowledge-base system built around four skills (`surveyor`, `specifier`, `archivist`, `sentinel`) that keep a project's specs, docs, and rules grounded in its real implementation instead of drifting from it. This repo holds the methodology's source; it is not itself a product with a `services/*/deltas/` of its own.
 
 ---
 
@@ -14,7 +14,7 @@ Source repository for the delta methodology: a portable Claude Code knowledge-ba
 | `.claude/skills/` | The delta methodology itself: `surveyor` (bootstrap), `specifier` (interview), `archivist` (write), `sentinel` (verify), each with `SKILL.md` and (for `archivist`) its artifact templates under `references/` |
 | `.claude/settings.json` | Permission policy — see Permissions below |
 | `.claude/.mcp.json` | Project-scoped MCP server config |
-| `projects/<project>/deltas/` | Where a project that adopts this harness keeps its per-slice `spec.md`/`design.md`/`plan.md` files (spec/design each carry an optional free-form Context section) — a layout convention this repo defines, not one it uses on itself |
+| `services/<service>/deltas/` | Where a service that adopts this harness keeps its per-slice `spec.md`/`design.md`/`plan.md` files (spec/design each carry an optional free-form Context section) — a layout convention this repo defines, not one it uses on itself |
 
 ## Repo layout
 
@@ -38,5 +38,5 @@ The full policy lives in `.claude/settings.json`. Destructive git operations (`p
 
 ## Non-goals
 
-- This repo is the methodology's source, not a project that uses it — never create a `projects/*/deltas/` here to document the skills themselves; they document themselves via their own `SKILL.md`.
+- This repo is the methodology's source, not a project that uses it — never create a `services/*/deltas/` here to document the skills themselves; they document themselves via their own `SKILL.md`.
 - Not an application codebase — there is no product source to document under `.claude/docs/`.
